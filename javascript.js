@@ -1,5 +1,9 @@
 let playerScore = 0;
 let computerScore = 0;
+const roundWinner = document.querySelector('.round');
+const pScore = document.querySelector('.pScore');
+const cScore = document.querySelector('.cScore');
+const winner = document.querySelector('.win');
 
 function getComputerChoice(x) {
     if (x <= 33) {
@@ -15,72 +19,91 @@ function playRound(playerSelection,computerSelection) {
     switch (true) {
         case playerSelection === "rock" && computerSelection === "scissors":
             playerScore += 1;
-            return "You Win! Rock beats Scissors!";
+            roundWinner.textContent = "You Win! Rock beats Scissors!";
             break;
         case playerSelection === "paper" && computerSelection === "rock":
             playerScore += 1;
-            return "You Win! Paper beats Rock!";
+            roundWinner.textContent = "You Win! Paper beats Rock!";
             break;
         case playerSelection === "scissors" && computerSelection === "paper":
             playerScore += 1;
-            return "You Win! Scissors beats Paper!";
+            roundWinner.textContent = "You Win! Scissors beats Paper!";
             break;
         case playerSelection === "scissors" && computerSelection === "rock":
             computerScore += 1;
-            return "You Lose! Rock beats Scissors!";
+            roundWinner.textContent = "You Lose! Rock beats Scissors!";
             break;
         case playerSelection === "rock" && computerSelection === "paper":
             computerScore += 1;
-            return "You Lose! Paper beats Rock!";
+            roundWinner.textContent = "You Lose! Paper beats Rock!";
             break;
         case playerSelection === "paper" && computerSelection === "scissors":
             computerScore += 1;
-            return "You Lose! Scissors beat Paper!";
+            roundWinner.textContent = "You Lose! Scissors beat Paper!";
             break;
         case playerSelection === "rock" && computerSelection === "rock":
-            return "You Tie! Rock equals Rock!";
+            roundWinner.textContent = "You Tie! Rock equals Rock!";
             break;
         case playerSelection === "paper" && computerSelection === "paper":
-            return "You Tie! Paper equals Paper!";
+            roundWinner.textContent = "You Tie! Paper equals Paper!";
             break;
         case playerSelection === "scissors" && computerSelection === "scissors":
-            return "You Tie! Scissors equal Scissors!";
+            roundWinner.textContent = "You Tie! Scissors equal Scissors!";
             break;
     }
+    pScore.textContent = `Player Score: ${playerScore}`;
+    cScore.textContent = `Computer Score: ${computerScore}`;
+
+    if (playerScore == 5) {
+        winner.textContent = "You Win the Game!";
+        btn[0].disabled = true;
+        btn[1].disabled = true; // Can turn these into a function
+        btn[2].disabled = true;
+    } else if (computerScore == 5) {
+        winner.textContent = "You Lose the Game!";
+        btn[0].disabled = true;
+        btn[1].disabled = true;
+        btn[2].disabled = true;
     }
+}
 
-    function game() {
-        for (let i = 0; i < 5; i++) {
-            if (i == 0) {
-                console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
-            } else if (i == 1) {
-                console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
-            } else if (i == 2) {
-                console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
-            } else if (i == 3) {
-                console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
-            } else if (i == 4) {
-                console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
-            }
-        }
-    }
+const btn = document.querySelectorAll('button');
+btn[0].addEventListener('click', () => {
+    playRound("rock", getComputerChoice(Math.random() * 100));
+    });
+btn[1].addEventListener('click', () => {
+    playRound("paper", getComputerChoice(Math.random() * 100));
+    });
+btn[2].addEventListener('click', () => {
+    playRound("scissors", getComputerChoice(Math.random() * 100));
+    });
 
-    game();
+// Can use a forEach() method instead and using some sort of method to grab the text from the button.
 
-    function gameWinner() {
-        console.log(`You scored ${playerScore}`);
-        console.log(`Computer scored ${computerScore}`);
 
-        if (playerScore > computerScore) {
-            console.log("You Win the Game!");
-        } else if (playerScore < computerScore) {
-            console.log("You Lose the Game!");
-        } else {
-            console.log("It's a Tie!");
-        }
-    }
 
-    gameWinner();
+
+
+
+
+// ------------
+  //  function game() {
+  //      for (let i = 0; i < 5; i++) {
+  //          if (i == 0) {
+  //              console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
+  //          } else if (i == 1) {
+  //              console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
+  //          } else if (i == 2) {
+  //              console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
+  //          } else if (i == 3) {
+  //              console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
+  //          } else if (i == 4) {
+  //              console.log(playRound(prompt("Rock Paper Scissors").toLowerCase(),getComputerChoice(Math.random() * 100)));
+  //          }
+  //      }
+  //   }
+
+  //   game();
 
     // Q1: For the GameWinner function, I have a question about it. Does a function call go in order of when it is called? Since
     // I ended calling gameWinner() after game() it called it after? Not all at the same time?
